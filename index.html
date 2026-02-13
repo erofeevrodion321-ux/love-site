@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для моей любимой ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ---------------- PAGE 1 ---------------- */
+
+.page1 {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+#bgText {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    color: rgba(255,255,255,0.2);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.button-row {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background: white;
+    color: #ff4d6d;
+    position: absolute;
+}
+
+/* ---------------- PAGE 2 ---------------- */
+
+.page2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+#slideshow-container {
+    position: relative;
+    width: 90%;
+    max-width: 650px;
+    height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide img {
+    width: 90%;
+    max-height: 75%;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.caption {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+
+<div class="page1">
+    <div id="bgText">С Днём Святого Валентина ❤️</div>
+    <div class="container">
+        <h1>Мы будем любить друг друга долго-долго? ❤️</h1>
+        <div class="button-row">
+            <button id="yesBtn">Да 💖</button>
+            <button id="noBtn">Нет 😢</button>
+        </div>
+    </div>
+</div>
+
+<div class="page2">
+    <div id="slideshow-container"></div>
+</div>
+
+<script>
+
+/* -------- КНОПКА НЕТ -------- */
+
+const messages = [
+"Ты уверена? 😢",
+"Подумай ещё раз 🥺",
+"Я расстроюсь…",
+"Может всё-таки да? ❤️",
+"Это последний шанс 😌",
+"Ну серьёзно? 😅",
+"Давай честно 🤔",
+"Такого варианта не существует 💖"
+];
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+let attempt = 0;
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", (e)=>{
+    e.preventDefault();
+    moveNoButton();
+});
+
+function moveNoButton(){
+    attempt++;
+
+    if(attempt <= messages.length){
+        noBtn.textContent = messages[attempt-1];
+    }
+
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+
+    if(attempt >= messages.length){
+        noBtn.style.opacity = "0";
+        yesBtn.style.transform = "scale(1.3)";
+    }
+}
+
+/* -------- КНОПКА ДА -------- */
+
+yesBtn.addEventListener("click", ()=>{
+    document.querySelector(".page1").style.display = "none";
+    document.querySelector(".page2").style.display = "flex";
+    startSlideshow();
+});
+
+/* -------- СЛАЙД-ШОУ -------- */
+
+const photos = [];
+for(let i=1; i<=31; i++){
+    photos.push(`photo${i}.jpg`);
+}
+
+const captions = [
+"Ты моя главная валентинка 💘",
+"С тобой всё становится лучше ❤️",
+"Ты — моё счастье",
+"Самая красивая",
+"Моя нежность",
+"Люблю твою улыбку",
+"Ты моё вдохновение",
+"Моя поддержка",
+"Самая родная",
+"Ты делаешь мой мир ярче",
+"Моя радость",
+"Моя гордость",
+"Моя судьба",
+"Ты — чудо",
+"Моё сердце",
+"Моя любовь",
+"Мой покой",
+"Самая милая",
+"Ты особенная",
+"Мой свет",
+"Моя нежная девочка",
+"С тобой уютно",
+"Моё всё",
+"Моя вселенная",
+"Ты — магия",
+"Люблю тебя безумно",
+"Навсегда вместе",
+"Ты — мечта",
+"Моя единственная",
+"Мой смысл",
+"Люблю тебя больше всего 💖"
+];
+
+function startSlideshow(){
+    const container = document.getElementById("slideshow-container");
+
+    photos.forEach((src, index)=>{
+        const slide = document.createElement("div");
+        slide.className = "slide";
+
+        const img = document.createElement("img");
+        img.src = src;
+
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.textContent = captions[index] || "";
+
+        slide.appendChild(img);
+        slide.appendChild(caption);
+        container.appendChild(slide);
+    });
+
+    let current = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function showSlide(index){
+        slides.forEach((slide,i)=>{
+            slide.style.opacity = (i===index) ? "1" : "0";
+        });
+    }
+
+    showSlide(current);
+
+    setInterval(()=>{
+        current = (current + 1) % slides.length;
+        showSlide(current);
+    }, 3000);
+}
+
+</script>
+
+</body>
+</html>
